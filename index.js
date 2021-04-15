@@ -1,98 +1,121 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
+//needs if statements for license badge
+//needs clickable table of contents that takes you to certain location in readme
+
+
 inquirer.prompt([
-    {
-      type: 'input',
-      message: 'what is your name?',
-      name: 'Name',
-    },
-    {
-      type: 'input',
-      message: 'what is your Github?',
-      name: 'Github',
-    },
-    {
-      type: 'input',
-      message: 'what is your LinkedIn?',
-      name: 'LinkedIn',
-    },
+      
     {
         type: 'input',
-        message: 'What are your hobbies',
-        name: 'Hobbies',
+        message: 'What is your project title?',
+        name: 'title',
       },
-  ])
- 
- 
- 
- 
- 
-  .then ((response) => {
-     console.log(response);
+     
+      {
+        type: 'list',
+        message: 'What license badge would you like?',
+        name: 'license',
+        choices:[ 'MIT License', 'Mozilla License', ]
+      },
+     
+      {
+        type: 'input',
+        message: 'What does it do? (description)',
+        name: 'description',
+      },
+     
+      {
+        type: 'input',
+        message: 'How do you install this?',
+        name: 'install',
+      },
+    
+      {
+        type: 'input',
+        message: 'How do i use this?',
+        name: 'usage',
+      },
+      
+      {
+        type: 'input',
+        message: 'What are your contribution guidelines?',
+        name: 'contribution',
+      },
+      
+      {
+        type: 'input',
+        message: 'Test instructions?',
+        name: 'test',
+      },
 
-     var name = response.Name;
-     var github = response.Github;
-     var linkedIn = response.LinkedIn;
-     var hobbies  = response.Hobbies;
-     var html = `<!DOCTYPE html>
-     <html lang="en">
-     <head>
-         <meta charset="UTF-8">
-         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>Document</title>
-     </head>
-     <body>
+      {
+        type: 'input',
+        message: 'What is your email?',
+        name: 'email',
+      },
+
+      {
+        type: 'input',
+        message: 'What is your github username?',
+        name: 'github',
+      },
         
-         <h2 id="question1">name:
-     
-         </h2>
-     
-         <h3 id="answer1">
-         ${name}
-     
-         </h3>
         
-         <h2 id="question2">Github:
-     
-         </h2>
-         
-         <h3 id="answer2">
-         ${github}
-             
-         </h3>
-         
-         <h2 id="question3">LinkedIn
-     
-         </h2>
-        
-         <h3 id="answer3">
-         ${linkedIn}
-             
-         </h3>
-         
-         <h2 id="question4">Hobbies:
-     
-         </h2>
-         
-         <h3 id="answer4">
-         ${hobbies}
-             
-         </h3>
-     
-     
-         
-     
-     
-     </body>
-     </html>`
+    
+])
+.then ((response) => {
+    console.log(response);
 
-     fs.writeFile('index.html', html , (err) => 
-     err ? console.error(err) : console.log('success')
-     
-     );
+    var title = response.title
+    var license = response.license
+    var description = response.description
+    var usage = response.usage
+    var contribution = response.contribution
+    var test = response.test
+    var email = response.email
+    var github = response.github
+
+    var readmeFile = 
+    `# ${title}
+   
+${license}
+
+## Description
+ 
+${description}
+
+## How To Use
+
+${usage}
+    
+## How To Constribute
+
+${contribution}
+
+## How To Test
+
+${test} 
+
+## Questions
+    
+What is my github?
+
+https://github.com/${github}
+
+How do you contact me?
+
+${email}
+
+    `
+    
 
 
- }) 
 
+    fs.writeFile('readmeGenerated.md', readmeFile , (err) => 
+    err ? console.error(err) : console.log('success')
+    
+    );
+
+})
